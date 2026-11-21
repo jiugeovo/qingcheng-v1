@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="青菜豆腐汤">
+  <rect width="640" height="420" fill="#e8f3df"/>
+  <ellipse cx="320" cy="260" rx="224" ry="92" fill="#f8fff2" stroke="#166534" stroke-width="10"/>
+  <ellipse cx="320" cy="242" rx="178" ry="62" fill="#bbf7d0"/>
+  <rect x="242" y="211" width="70" height="48" rx="10" fill="#fff7ed"/>
+  <rect x="337" y="236" width="76" height="48" rx="10" fill="#fff7ed"/>
+  <path d="M185 228c36-42 72-42 108 0M392 220c34-42 70-42 108 0M255 283c46 26 92 26 138 0" fill="none" stroke="#15803d" stroke-width="16" stroke-linecap="round"/>
+  <path d="M252 142c-12-36 20-50 8-84M326 138c-10-32 23-47 10-78M400 144c-12-34 22-49 10-82" fill="none" stroke="#86efac" stroke-width="12" stroke-linecap="round"/>
+</svg>

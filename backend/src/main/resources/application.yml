@@ -1,0 +1,79 @@
+server:
+  port: 8080
+  address: 127.0.0.1
+  forward-headers-strategy: native
+  tomcat:
+    threads:
+      min-spare: 10
+      max: 80
+    accept-count: 100
+    connection-timeout: 5s
+
+spring:
+  application:
+    name: wechat-ordering
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/qingcheng_ordering?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8mb4_0900_ai_ci&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}
+    username: ${SPRING_DATASOURCE_USERNAME:qingcheng}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 3000
+      idle-timeout: 300000
+      max-lifetime: 1800000
+  flyway:
+    enabled: ${SPRING_FLYWAY_ENABLED:true}
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 1
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+app:
+  super-admin:
+    username: ${SUPER_ADMIN_USERNAME:superadmin}
+    password: ${SUPER_ADMIN_PASSWORD:}
+    nickname: ${SUPER_ADMIN_NICKNAME:superadmin}
+  upload:
+    dir: ./uploads
+  legacy-schema-migration:
+    enabled: ${LEGACY_SCHEMA_MIGRATION_ENABLED:false}
+  rate-limit:
+    auth-per-minute: 12
+    upload-per-minute: 30
+    friend-media-per-minute: 300
+    ai-per-minute: 20
+    api-per-minute: 120
+  client-ip:
+    # Forwarding headers are accepted only when the direct peer is a trusted proxy.
+    trusted-proxies:
+      - 127.0.0.1/32
+      - ::1/128
+  ai:
+    model: ${AI_MODEL:gpt-5.6-sol}
+    model-selection-enabled: ${AI_MODEL_SELECTION_ENABLED:true}
+    base-url: ${AI_BASE_URL:https://example.invalid/v1}
+    api-key: ${AI_API_KEY:}
+    request-timeout: ${AI_REQUEST_TIMEOUT:120s}
+    stream-timeout: ${AI_STREAM_TIMEOUT:360s}
+    max-concurrent-requests: ${AI_MAX_CONCURRENT_REQUESTS:8}
+  birthday:
+    enabled: ${BIRTHDAY_GREETING_ENABLED:true}
+    username: ${BIRTHDAY_GREETING_USERNAME:${SUPER_ADMIN_USERNAME:superadmin}}
+    model: ${BIRTHDAY_GREETING_MODEL:gpt-5.6-sol}
+  weather:
+    qweather-key: ${APP_WEATHER_QWEATHER_KEY:}
+    qweather-host: ${APP_WEATHER_QWEATHER_HOST:https://example.invalid}
+    ip-location-url: ${APP_WEATHER_IP_LOCATION_URL:http://ip-api.com/json/{ip}?fields=status,message,countryCode,regionName,city,lat,lon,query&lang=zh-CN}
+    timeout: ${APP_WEATHER_TIMEOUT:12s}
+    cache-ttl: ${APP_WEATHER_CACHE_TTL:10m}
+  push:
+    enabled: ${PUSH_ENABLED:false}
+    jpush:
+      app-key: ${JPUSH_APP_KEY:}
+      master-secret: ${JPUSH_MASTER_SECRET:}
+      base-url: ${JPUSH_BASE_URL:https://api.jpush.cn/v3/push}
+      timeout: ${JPUSH_TIMEOUT:8s}

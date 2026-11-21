@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+target/
+.gradle/
+.idea/
+local.properties
+.env
+.env.*
+*.apk
+*.aab
+*.jks
+*.keystore
+uploads/
+backups/

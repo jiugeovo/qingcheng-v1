@@ -1,0 +1,7 @@
+{
+  "versionCode": 121,
+  "versionName": "0.5.2",
+  "apkUrl": "https://example.invalid/app.apk",
+  "forceUpdate": false,
+  "notes": "纪念日支持创建者和管理员编辑、删除，其他用户共享查看；修正生日日期，保留年份选择。"
+}

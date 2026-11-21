@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <exclude domain="sharedpref" path="qingcheng_session.xml" />
+    <!-- Also protect a future device-protected-storage copy, available since API 24. -->
+    <exclude domain="device_sharedpref" path="qingcheng_session.xml" />
+</full-backup-content>

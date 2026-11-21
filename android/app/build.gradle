@@ -1,0 +1,179 @@
+plugins {
+    id "com.android.application"
+    id "jacoco"
+}
+
+def qingchengVersionCode = 121
+def qingchengVersionName = "0.5.2"
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+def jpushAppKey = System.getenv("JPUSH_APP_KEY") ?: localProperties.getProperty("jpush.appKey", "")
+def releaseKeystorePath = System.getenv("QINGCHENG_KEYSTORE")
+def releaseKeystore = releaseKeystorePath == null || releaseKeystorePath.trim().isEmpty()
+        ? null : file(releaseKeystorePath)
+def releaseStorePassword = System.getenv("QINGCHENG_KEYSTORE_PASSWORD")
+def releaseKeyAlias = System.getenv("QINGCHENG_KEY_ALIAS")
+def releaseKeyPassword = System.getenv("QINGCHENG_KEY_PASSWORD")
+
+android {
+    namespace "com.qingcheng.ordering"
+    compileSdk 35
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    defaultConfig {
+        applicationId "com.qingcheng.ordering"
+        minSdk 23
+        targetSdk 35
+        versionCode qingchengVersionCode
+        versionName qingchengVersionName
+        testInstrumentationRunner "com.qingcheng.ordering.OfflineUiTestRunner"
+        buildConfigField "String", "API_BASE_URL", '"https://example.invalid"'
+        buildConfigField "boolean", "COUPLE_LOCAL", "false"
+        buildConfigField "boolean", "COUPLE_TEST", "false"
+
+        manifestPlaceholders = [
+                qingchengAppLabel: "@string/app_name",
+                JPUSH_APPKEY : jpushAppKey,
+                JPUSH_CHANNEL: "qingcheng"
+        ]
+    }
+
+    signingConfigs {
+        release {
+            storeFile releaseKeystore
+            storePassword releaseStorePassword
+            keyAlias releaseKeyAlias
+            keyPassword releaseKeyPassword
+            enableV1Signing true
+            enableV2Signing true
+            enableV3Signing true
+            enableV4Signing false
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.debug
+        }
+        localCouple {
+            initWith debug
+            applicationIdSuffix ".couple.local"
+            versionNameSuffix "-couple-local"
+            matchingFallbacks = ["debug"]
+            manifestPlaceholders = [qingchengAppLabel: "青程 · 本地预览", JPUSH_APPKEY: "", JPUSH_CHANNEL: "local"]
+            buildConfigField "String", "API_BASE_URL", '"http://127.0.0.1:18081"'
+            buildConfigField "boolean", "COUPLE_LOCAL", "true"
+        }
+        localDeveloper {
+            initWith debug
+            applicationIdSuffix ".couple.test"
+            versionNameSuffix "-couple-test"
+            matchingFallbacks = ["debug"]
+            manifestPlaceholders = [qingchengAppLabel: "青程 · 开发者测试区", JPUSH_APPKEY: "", JPUSH_CHANNEL: "local-test"]
+            buildConfigField "String", "API_BASE_URL", '"http://127.0.0.1:18082"'
+            buildConfigField "boolean", "COUPLE_LOCAL", "true"
+            buildConfigField "boolean", "COUPLE_TEST", "true"
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+        uiTest {
+            initWith release
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-ui-test-r2"
+            signingConfig signingConfigs.debug
+            minifyEnabled true
+            shrinkResources true
+            matchingFallbacks = ["release"]
+        }
+    }
+
+    sourceSets.uiTest.res.srcDir "src/debug/res"
+    sourceSets.localCouple.manifest.srcFile "src/coupleLocal/AndroidManifest.xml"
+    sourceSets.localDeveloper.manifest.srcFile "src/coupleLocal/AndroidManifest.xml"
+    sourceSets.localCouple.res.srcDir "src/coupleLocal/res"
+    sourceSets.localDeveloper.res.srcDir "src/coupleLocal/res"
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+}
+
+tasks.register("verifyJpushAppKey") {
+    doLast {
+        if (jpushAppKey == null || jpushAppKey.trim().isEmpty()) {
+            throw new GradleException("Missing JPush AppKey. Set JPUSH_APP_KEY or jpush.appKey in local.properties.")
+        }
+    }
+}
+
+tasks.register("verifyReleaseSigningKey") {
+    doLast {
+        if (releaseKeystorePath == null || releaseKeystorePath.trim().isEmpty()) {
+            throw new GradleException("Release signing requires QINGCHENG_KEYSTORE; no keystore path defaults are permitted.")
+        }
+        if ([releaseStorePassword, releaseKeyAlias, releaseKeyPassword].any { it == null || it.isEmpty() }) {
+            throw new GradleException("Release signing requires QINGCHENG_KEYSTORE_PASSWORD, QINGCHENG_KEY_ALIAS and QINGCHENG_KEY_PASSWORD; no defaults are permitted.")
+        }
+        if (releaseKeystore == null || !releaseKeystore.isFile()) {
+            throw new GradleException("QINGCHENG_KEYSTORE does not point to an existing keystore file.")
+        }
+    }
+}
+
+tasks.matching { it.name == "preReleaseBuild" }.configureEach {
+    dependsOn tasks.named("verifyJpushAppKey")
+    dependsOn tasks.named("verifyReleaseSigningKey")
+}
+
+jacoco { toolVersion = "0.8.12" }
+
+tasks.withType(Test).configureEach {
+    jacoco {
+        includeNoLocationClasses = true
+        excludes = ["jdk.internal.*"]
+    }
+}
+
+tasks.register("jacocoDebugUnitTestReport", JacocoReport) {
+    dependsOn "testDebugUnitTest"
+    reports {
+        xml.required = true
+        html.required = true
+    }
+    sourceDirectories.setFrom(files("src/main/java"))
+    classDirectories.setFrom(fileTree(layout.buildDirectory.dir("intermediates/javac/debug/compileDebugJavaWithJavac/classes")) {
+        exclude "**/R.class", "**/R\$*.class", "**/BuildConfig.*"
+    })
+    executionData.setFrom(layout.buildDirectory.file("jacoco/testDebugUnitTest.exec"))
+}
+
+dependencies {
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.4"
+    implementation "androidx.core:core:1.13.1"
+    implementation "androidx.recyclerview:recyclerview:1.3.2"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation files("../libs/jpush-6.1.1.aar")
+    implementation files("../libs/jcore-5.4.3.aar")
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.robolectric:robolectric:4.14.1"
+    androidTestImplementation "androidx.test:runner:1.6.2"
+    androidTestImplementation "junit:junit:4.13.2"
+}

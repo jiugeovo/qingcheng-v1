@@ -1,0 +1,21 @@
+<resources>
+    <style name="BaseAppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowActionModeOverlay">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">#FFF3DF</item>
+        <item name="android:navigationBarColor">#FFF3DF</item>
+        <item name="android:colorAccent">#0F766E</item>
+    </style>
+
+    <style name="AppTheme" parent="BaseAppTheme" />
+
+    <style name="PiggyTheme" parent="AppTheme">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#FF6E91</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/fade</item>
+        <item name="android:windowExitTransition">@android:transition/fade</item>
+    </style>
+</resources>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="自定义菜品">
+  <rect width="640" height="420" fill="#fef3c7"/>
+  <path d="M108 260c18-92 102-152 212-152s194 60 212 152c13 66-44 106-212 106S95 326 108 260z" fill="#fff7ed" stroke="#92400e" stroke-width="10"/>
+  <circle cx="254" cy="227" r="48" fill="#fb7185"/>
+  <circle cx="369" cy="219" r="54" fill="#2dd4bf"/>
+  <circle cx="318" cy="286" r="42" fill="#f59e0b"/>
+  <path d="M210 156c32 20 68 20 104 0M375 155c34 22 72 22 106 0" fill="none" stroke="#16a34a" stroke-width="16" stroke-linecap="round"/>
+  <path d="M198 316c78 34 168 38 246 0" fill="none" stroke="#f97316" stroke-width="12" stroke-linecap="round"/>
+</svg>

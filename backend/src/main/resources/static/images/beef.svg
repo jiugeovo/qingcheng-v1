@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="黑椒牛柳">
+  <rect width="640" height="420" fill="#f4e7d7"/>
+  <path d="M118 265c6-88 94-152 202-152s196 64 202 152c5 66-52 104-202 104S113 331 118 265z" fill="#fff7ed" stroke="#5f2d19" stroke-width="10"/>
+  <rect x="192" y="185" width="110" height="58" rx="22" fill="#7c2d12" transform="rotate(-14 247 214)"/>
+  <rect x="331" y="180" width="116" height="60" rx="22" fill="#92400e" transform="rotate(12 389 210)"/>
+  <rect x="267" y="257" width="126" height="58" rx="22" fill="#451a03" transform="rotate(5 330 286)"/>
+  <circle cx="241" cy="178" r="7" fill="#111827"/>
+  <circle cx="402" cy="261" r="7" fill="#111827"/>
+  <circle cx="347" cy="220" r="6" fill="#111827"/>
+  <path d="M178 150c50 18 92 18 128 0M378 151c38 20 78 20 112 0" fill="none" stroke="#0f766e" stroke-width="16" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,15 @@
+<resources>
+    <item name="nav_home" type="id" />
+    <item name="nav_shop" type="id" />
+    <item name="nav_orders" type="id" />
+    <item name="nav_smart" type="id" />
+    <item name="nav_wallet" type="id" />
+    <item name="nav_profile" type="id" />
+    <item name="piggy_button" type="id" />
+    <item name="piggy_glow" type="id" />
+    <item name="piggy_shadow" type="id" />
+    <item name="piggy_image" type="id" />
+    <item name="piggy_score" type="id" />
+    <item name="piggy_sound_toggle" type="id" />
+    <item name="piggy_haptics_toggle" type="id" />
+</resources>

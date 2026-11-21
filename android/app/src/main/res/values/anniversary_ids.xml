@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="anniversary_add" type="id" />
+    <item name="anniversary_back" type="id" />
+    <item name="anniversary_refresh" type="id" />
+    <item name="anniversary_calendar" type="id" />
+    <item name="anniversary_details" type="id" />
+    <item name="anniversary_upcoming" type="id" />
+    <item name="anniversary_status" type="id" />
+    <item name="anniversary_editor_title" type="id" />
+    <item name="anniversary_editor_date" type="id" />
+    <item name="anniversary_editor_note" type="id" />
+    <item name="anniversary_editor_repeat" type="id" />
+    <item name="anniversary_editor_error" type="id" />
+    <item name="anniversary_editor_type" type="id" />
+    <item name="anniversary_editor_type_hint" type="id" />
+    <item name="anniversary_month_picker" type="id" />
+    <item name="anniversary_editor_year" type="id" />
+</resources>

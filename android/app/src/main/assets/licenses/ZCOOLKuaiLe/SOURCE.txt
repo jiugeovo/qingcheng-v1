@@ -1,0 +1,11 @@
+ZCOOL KuaiLe Regular
+
+Source repository: https://github.com/google/fonts
+Source commit: 389b770410cc0b7c21c85673bfa2077420fe7f65
+Source file: ofl/zcoolkuaile/ZCOOLKuaiLe-Regular.ttf
+Source URL: https://raw.githubusercontent.com/google/fonts/389b770410cc0b7c21c85673bfa2077420fe7f65/ofl/zcoolkuaile/ZCOOLKuaiLe-Regular.ttf
+Retrieved: 2026-07-20
+Original size: 1514968 bytes
+Original SHA-256: 812a6fc1fe54b6d73a419245c32dfeba8aa33104d5be90d1cf6af082007cb71d
+Modifications: none
+License: SIL Open Font License 1.1 (see OFL.txt in this directory)
